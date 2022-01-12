@@ -1,0 +1,63 @@
+12/01/2022 **************************************************
+
+1º- VOY A CREAR UN PROYECTO : npm
+
+renegade@MiPC:~/Proyectos/Typescript2022$ npm init
+
+Se crea el fichero: package.json
+
+2º- Y ahora instalo Typescript
+(Se instala en -dev porque typescript es un transpilador y es una dependencia de desarrollo)
+renegade@MiPC:~/Proyectos/Typescript2022$ npm i --save-dev typescript
+
+En el package.json me añade la dependecia en:
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
+Y añade la librería en la carpeta: node_modules/typescript
+
+3º Vamos a crear el 'tsconfig.json' para nuestra aplicación de Typescript
+> node_modules/.bin/tsc --init
+> message TS6071: Successfully created a tsconfig.json file.
+
+4º Ahora configuramos manualmente en el 'tsconfig.json' las siguientes líneas:
+"outDir": "./dist",    /* Redirect output structure to the directory. */
+"rootDir": "./src",    /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
+
+5º En el 'package.json' añadimos el siguiente script
+  "scripts": {
+    "build":  "tsc",
+    "start":    "node dist/index.js"
+  },
+
+Y ejecuto:   npm run build & npm run start
+
+6º Vamos a hacer un repositorio git:
+> git init
+Inicializado repositorio Git vacío en /home/renegade/Proyectos/Typescript2022/.git/
+
+Y añadimos un fichero oculto '.gitignore' al proyecto para añadir lo que no queramos subir
+en este caso, la carpeta: 'node_modules' + 'dist'
+
+7º Subimos al repositorio nuestro proyecto y hacemos commit de la primera versión:
+> git add .
+> git commit -m "Proyecto Typescript2022"
+
+8º Quiero añadir un directorio remoto (git add remote...)
+
+> git remote add Typescript2022 https://github.com/RenegadeAsturias/Typescript2022.git
+
+9º Para ver los remotos:
+> git remote
+Typescript2022
+
+10º Ahora queremos enviar el código de nuestro repositorio a la nube:
+¡Pero ojo que el repositorio debe existir en GitHub antes de hacer el push!
+Desde GitHub me he creado un repositorio: 'Typescript2022'
+
+Y ahora para subir el código a GitHub:
+> git push <<nombre del remoto>> <<rama que queremos subir>>
+> git push origin master <- Sube el código de la rama master
+> git push origin --all  <- Sube todo el código al servidor remoto
+
+enegade@MiPC:~/Proyectos/Typescript2022$ git push TypescriptAPI master
