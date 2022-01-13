@@ -31,6 +31,7 @@ Y añade la librería en la carpeta: node_modules/typescript
   },
 
 Y ejecuto:   npm run build & npm run start
+Y ejecuto:   npm run clean & npm run build & npm run start
 
 6º Vamos a hacer un repositorio git:
 > git init

@@ -1,0 +1,21 @@
+
++ Operador rest
+
+function miFuncion(...args){
+	console.log(args);
+	console.log(args.length);
+}
+
+miFuncion([1,2,3], [4,5,6]);
+> [[1,2,3], [4,5,6]]
+
+**********************************
+
+function sumar = (x, y, z) => {
+	const args = [x, y, z]; // añadimos los parámetros a un array, para utiliar reduce
+	return args.reduce((a, b) => a + b, 0);
+}
+
+function sumar = (...args) => {
+	return args.reduce((a, b) => a + b, 0); // args ya es un array y podemos utilizar reduce
+}

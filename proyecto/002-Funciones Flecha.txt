@@ -1,0 +1,45 @@
+
++ Funciones flecha:
+
+const fecha = function() {
+	return new Date();
+}
+
+const fecha = () => new Date();
+
+
++ Funciones flecha con parámetros:
+
+const sumarTres = function(x) {
+	return x + 3;
+}
+
+const sumarTres = (x) => x + 3;
+
+> sumarTres(4);
+
+*****************************************
+
+const concatenarArrays = function(array1, array2) {
+	return array1.concat(array2);
+}
+
+> console.log(concatenarArrays([1, 2], [3, 4, 5]));
+
+const concatenarArrays = (array1, array2) => array1.concat(array2);
+console.log(concatenarArrays([1, 2], [3, 4, 5]));
+
+*****************************************
+
+const sumar = function(a, b) {
+	let num = 5;
+	return a + b + num;
+}
+
+> console.log(sumar(3, 5));
+
+​const sumar = (a, b) =>
+	let num = 5;
+	return a + b + num;
+}
+
