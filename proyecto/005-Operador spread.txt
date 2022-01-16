@@ -1,3 +1,21 @@
 
 + Operador spread
 
+Sintáxis Spread
+La sintaxis extendida o spread syntax permite a un elemento iterable tal como un arreglo o cadena 
+ser expandido en lugares donde cero o más argumentos (para llamadas de  función) o elementos (para Array literales) son esperados, 
+o a un objeto ser expandido en lugares donde cero o más pares de valores clave (para literales Tipo Objeto) son esperados.
+
+La sintaxis Rest luce exactamente como la sintaxis spread, pero esto es usado por la desestructuración de arreglos y objetos.
+De cierta forma, la sintaxis rest es la opuesta a la sintaxis spread: spread 'expande' un arreglo en sus elementos, 
+mientras rest agrupa múltiples elementos y los 'condensa' en un único elemento. 
+
+const numeros = [1, 2, 3];
+
+function sumar(x, y, z) {
+	return x + y + z;
+}
+
+const suma = sumar(numeros[0], numeros[1], numeros[2]);
+
+const suma = sumar(...numeros); // Descompone el Array en sus elementos individuales

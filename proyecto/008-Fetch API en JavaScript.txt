@@ -1,0 +1,56 @@
+Fetch API en JavaScript
+
+
+La API Fetch proporciona una interfaz para recuperar recursos (incluso a través de la red). 
+Resultará familiar a cualquiera que haya usado XMLHttpRequest, 
+pero la nueva API ofrece un conjunto de características más potente y flexible.
+
+El método fetch() toma un argumento obligatorio, la ruta de acceso al recurso que desea recuperar. 
+Devuelve una Promise (en-US) que resuelve en Response a esa petición, sea o no correcta. 
+También puede pasar opcionalmente un objeto de opciones init como segundo argumento (ver Request).
+
+Una vez que Response es recuperada, hay varios métodos disponibles para definir cuál es el contenido del cuerpo
+y como se debe manejar (ver Body).
+
+
+
+
+fetch('pokemon.json', {
+
+})
+.then((response) => {
+	debugger
+})
+
+*************************************************
+const $pokemon = document.querySelector('#pokemon')
+function renderPokemon(image){
+	$pokemon.setAttribute('src', image);
+}
+
+fetch('pokemon.json', { // Ahora 'fetch' me devuelve una promesa
+
+})
+.then(response => response.json()) // Ahora 'response.json()' me devuelve una promesa también
+.then(data => renderPokemon(data.image)) // data tiene: data = {name="pikachu", image="pikachu.jpeg"}
+
+*************************************************
+
+
+fetch('pikachu.jpeg', { // Ahora 'fetch' me devuelve una promesa
+
+})
+.then(response => response.blob()) // Ahora 'response.json()' me devuelve una promesa también
+.then(binaryLargeObject => {
+	const domString = URL.createObjectURL(binaryLargeObject); // Convierte la imagen a texto, contiene: blob:http://127.0.0.1:5500/2a6d47a7-d1045 que también soporta el 'src' de la imagen
+	renderPokemon(domString);
+}
+
+*************************************************
+
+fetch('https://pokeapi.co/api/v2/pokemon/25/') // Ahora 'fetch' me devuelve una promesa
+.then(response => response.json()) // Ahora 'response.json()' me devuelve una promesa también
+.then(pokemon => {
+	renderPokemon(pokemon.sprites.front_default) // pokemon tiene un json enorme, nos interesa: 'sprites: front_default'
+}
+

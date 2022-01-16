@@ -1,0 +1,90 @@
+
+Promesas (Promise)
+
+El objeto Promise (Promesa) es usado para computaciones asíncronas. 
+Una promesa representa un valor que puede estar disponible ahora, en el futuro, o nunca.
+
+Sintaxis
+new Promise( /* ejecutor */ function(resolver, rechazar) { ... } );
+
+Una Promesa se encuentra en uno de los siguientes estados:
+pendiente (pending) : estado inicial, no cumplida o rechazada.
+cumplida (fulfilled): significa que la operación se completó satisfactoriamente.
+rechazada (rejected): significa que la operación falló.
+
+Como los métodos Promise.prototype.then() y Promise.prototype.catch() 
+retornan promesas, éstas pueden ser encadenadas.
+
+const promesa = fetch('https://pokeapi.co/api/v2/pokemon/dittosss')
+.then(response => response.json()) // Respuesta del servidor de tipo JSON. 'response.json() también devuelve una Promesa
+.then(dataJson => console.log(dataJson.base_experience))
+.catch(reason => console.log("Pokemon no encontrado. Error:"+reason.messageerror));
+
+fetch('pikachu.jpeg') // Ahora 'fetch' me devuelve una promesa
+.then(response => response.blob()) // Ahora 'response.json()' me devuelve una promesa también
+.then(binaryLargeObject => {
+	const domString = URL.createObjectURL(binaryLargeObject); // Convierte la imagen a texto, contiene: blob:http://127.0.0.1:5500/2a6d47a7-d1045 que también soporta el 'src' de la imagen
+	renderPokemon(domString);
+}
+
+**********************************************************
+
+const promesa = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve("ok"); // Establecemos el resolve
+        // reject("Ha ocurrido un error!");
+    }, 5000);
+});
+
+promesa
+.then(respuesta => console.log("respuesta="+respuesta))
+.catch(error => console.log("Error:"+error));
+
+**********************************************************
+
+function buy(thingToBuy, time = 2000) {
+	return new Promise((resolve, reject) => {
+		setTimeout(()=>{
+			console.log(`${thingToBuy} comprado!`);
+			resolve(`${thingToBuy} comprado!`);
+		}, time)
+	}
+}
+
+buy('frutas')
+.then((thingToBuy)=>{
+	console.log("¡"+thingToBuy+"!");
+}
+
+**********************************************************
+
+function shopping() {
+	const carrito = []
+	return buy('fruta') // La función 'buy' devuelve una promesa
+	.then(thing => { carrito.push(thing); return buy('verduras') })
+	.then(thing => { carrito.push(thing); return buy('carne') })
+	.then(thing => { carrito.push(thing); return buy('granos') })
+	.then(thing => { carrito.push(thing); return carrito })
+}
+
+shopping()
+.then((carrito)=> console.log(carrito.toString());
+
+
+**********************************************************
+
+// Promise.all, recibe un array de Promesas
+// Todas las promesas se lanzan al mismo tiempo y se devuelve el resultado cuando terminan todas
+// Devuelve un array con las respuestas de todas las promesas.
+
+Promise.all([
+	buy('fruta',5000),
+	buy('verduras',5000),
+	buy('carne',5000),
+	buy('granos',5000),
+])
+.then((carrito) => { console.log(carrito.toString()); });
+
+***********************************************************
+
+

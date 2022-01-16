@@ -1,0 +1,51 @@
+Funciones Vs Funciones Fecha
+
+function getRandomId(){
+
+}
+
+Las Arrow Function siempre son funcines anónimas, sin nombre
+() = > {
+
+}
+
+Las Arrow Function también se pueden declarar como una expresión
+
+const getRandomId = (){
+
+}
+
+********************************************************
+
+function getRandomId(maximo){ // Entre 1 y 150
+	return Math.floor(Math.random()*(maximo-1)+1);
+}
+
+console.log(getRandomId(150));
+
+********************************************************
+
+const getRandomId = (max) => Math.floor(Math.random()*(maximo-1)+1);
+
+const getRandomId = max => Math.floor(Math.random()*(maximo-1)+1); // Si solo, tiene un parámetro se le pueden quitar los paréntesis
+
+const getRandomId = _ => Math.floor(Math.random()*(maximo-1)+1); // Si solo tiene un parámetro puede ser guión bajo
+
+********************************************************
+
+// Ojo al uso de 'this' dentro de la function, que hereda el contexto actual, en este caso la función
+const example1 = {
+	max: 150, 
+	getRandomId: function(){
+		return Math.floor(Math.random()*(this.max-1)+1);
+	}
+}
+
+// Ojo al uso de 'this' dentro de la arrow function, que hereda el contexto superior, en este caso Window 
+const example2 = {
+	max: 150, 
+	getRandomId: () => {
+		return Math.floor(Math.random()*(this.max-1)+1);
+	}
+}
+

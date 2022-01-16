@@ -1,0 +1,145 @@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
++ Sintaxis de desestructuración
+
+Asigna las propiedades de un objeto a variables que podemos utilizar en nuestro programa.
+
+const usuario = {
+	nombre: "Gino Smith",
+	edad: 34
+}
+
+const {usuario, edad} = usuario; // Crea las variables con los valores correspondientes de la propiedad en el objeto
+
+*****************************************************
+
+const coordenadas =  {
+	x: 4,
+	y: 6,
+	z: 12
+}
+
+const {x, y, z} = coordenadas;
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
++ Sintaxis de desestructuración: Objetos anidados
+
+const usuario = {
+	johnDoe: {
+		edad: 27,
+		correo: "johnDoe@gmail.com"
+	}
+}
+
+const { johnDoe: { edad, correo } } = usuario;
+console.log(edad, correo);
+
+const { johnDoe: { edad: edadDelUsuario, correo: correoDelUsuario } } = usuario;
+console.log(edadDelUsuario, correoDelUsuario);
+
+// ************************************************************
+
+const PRONOSTICO_LOCAL = {
+	"ayer": {
+		minima: 61,
+		maxima: 75
+	},
+	"hoy": {
+		minima: 64,
+		maxima: 77
+	},
+	"mañana": {
+		minima: 68,
+		maxima: 80
+	},
+}
+
+const minimaHoy = PRONOSTICO_LOCAL.hoy.minima;
+const maximaHoy = PRONOSTICO_LOCAL.hoy.maxima;
+console.log(minimaHoy, maximaHoy);
+
+const {hoy: {minima: minimaHoy}} = PRONOSTICO_LOCAL;
+const {hoy: {maxima: maximaHoy}} = PRONOSTICO_LOCAL;
+const {hoy: {minima: minimaHoy, maxima: maximaHoy}} = PRONOSTICO_LOCAL;
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
++ Sintaxis de desestructuración: Arrays
+
+var a;
+var b;
+[a, b] = [1, 2];
+console.log(a, b);
+
+[a, b] = [1, 2, 3, 4];
+
+[a, b,,, c] = [1, 2, 3, 4, 5, 6]; // Saltar posiciones
+
+
+**************************************************************
+
+var a = 8;
+var b = 6;
+[b, a] = [a, b]; // Intercambia los valores
+console.log(a, b);
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
++ Sintaxis de desestructuración: con el Operador rest
+
+var a;
+var b;
+var args;
+[a, b, ...args] = [1, 2, 3, 4, 5, 6, 7];
+console.log(a, b, args);
+> 1, 2, [3, 4, 5, 6, 7]
+
+******************************************************
+
+const arrayInicial = [1, 2, 3, 4, 5, 6, 7, 8];
+
+function removerTresPrimerosElementos(array){
+	const  [,,, ...nuevoArray] = array;
+	return nuevoArray;
+}
+
+const arrayFinal = removerTresPrimerosElementos(arrayInicial);
+console.log(arrayFinal);
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
++ Sintaxis de desestructuración: Pasar un Objeto como argumento
+
+var nuevoPerfilCliente = {
+	nombre: "Jonh Doe",
+	edad: 24,
+	nacionalidad: "Español",
+	ubicacion: "España"
+}
+
+const actualizarPerfil = (informacionDePerfil) => {
+	const {nombre, edad, nacionalidad, ubicacion} = informacionDePerfil;
+	console.log(nombre, edad, nacionalidad, ubicacion);
+}
+
+actualizarPerfil(nuevoPerfilCliente);
+
+****************************************************************
+
+const actualizarPerfil = ({nombre, edad, nacionalidad, ubicacion}) => {
+	console.log(nombre, edad, nacionalidad, ubicacion);
+}
+
+actualizarPerfil(nuevoPerfilCliente);
+
+****************************************************************
+
+var estadisticas = {
+	max: 56,78,
+	desviacionEstandar: 4.34,
+	mediana: 34.54,
+	moda: 23.87,
+	min: -0.75,
+	promedio: 35.85
+}
+
+const mitad = ({max, min}) => (max + min)/2.0;
+
+console.log(mitad(estadisticas));
+
