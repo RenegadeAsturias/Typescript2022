@@ -1,0 +1,422 @@
+
+// Típos básicos ********************************************************
+
+let myTypeString: string = 'Hello world!';
+let myTypeNumber: number = 33;
+let myTypeBoolean: boolean: true;
+
+// Array ****************************************************************
+let arrayNumber: number[] = [1, 2, 3];
+let arrayNumber: Array<number> = [1, 2, 3];
+let arrayString: string[] = ["Uno","Dos","Tres"];
+let arrayAny: any[] = ['Hola', 33, false];
+
+// Tupla ****************************************************************
+let tuplaPlayer: [string, number, boolean] = ['Cristiano', 28, true];
+
+// Array de tuplas ******************************************************
+let players: [number, string][];
+
+players = [
+	[1, 'Lebron'],
+	[2, 'Durant'],
+	[3, 'Carry'],
+];
+
+// Unions ***************************************************************
+let myVariable: string | number | null;
+
+
+// Enum *****************************************************************
+
+enum Roles {
+	User, _________________0
+	Admin,_________________1
+	SuperAdmin ____________2
+}
+
+enum Roles {
+	User = 1,
+	Admin = 2,
+	SuperAdmin = 3
+}
+
+enum Roles {
+	User = 'USER',
+	Admin = 'ADMIN',
+	SuperAdmin = 'SUPERADMIN'
+}
+
+> console.log(Roles.User)
+
+// Objects  *************************************************************
+
+const roles 
+	User = 0,
+	Admin = 1,
+	SuperAdmin = 2
+}
+
+> console.log(roles.User)
+
+// Type assertion (Casteos)
+
+let channel:any = 'Prueba';
+
+let channelStr = <string>channel;
+let channelStr = channel as string;
+
+const myCanvas = <HTMLCanvasElement>document.getElementById('main');
+const myCanvas = document.getElementById('main') as HTMLCanvasElement;
+
+// Functions  ************************************************************
+
+function printPosition(position: {lat: number, long: number}):void {
+	console.log(`Latitud ${position.lat} y Longitud ${position.long}`);
+}
+
+printPosition({lat: 3, long: 55});
+
+// Parámetros opcionales con ?
+function printPosition(position: {lat: number, long?: number}):void {
+	console.log(`Latitud ${position.lat} y Longitud ${position.long}`);
+}
+
+printPosition({lat: 3});
+
+// Parámetros con unnion types
+function printPosition(position: {lat: number, long: number | string}):void {
+	console.log(`Latitud ${position.lat} y Longitud ${position.long}`);
+}
+
+printPosition({lat: 3, long: '125'});
+
+// Parámetros con valores por defecto
+function greet (name: string = 'User'): void {
+ ...
+
+
+// Interfaces Vs Clases **************************************************
+
+// Interfaces **************************
+
+interface Book {
+	id: number;
+	title: string;
+	author: string;
+	coAuthor?: string;
+	isLoan?: (id: number)=>void;
+}
+
+const book:Book = {
+	id:1,
+	title: 'My title',
+	author: 'Renegade'
+}
+
+const books: Book[] = [];
+
+function getBook(): Book {
+	return { id: 1, title: 'My title', author: 'Renegade' };
+}
+const myBook = getBook();
+
+function createBook(book:Book):Book {
+	return book;
+}
+
+const newBook: Book = {
+	id: 1,
+	title: 'My title',
+	author: 'Renegade',
+	coAuthor: 'RPS'
+}
+createBook(newBook);
+
+------------------------------------------
+
+interface Person {
+	id: number;
+	name: string;
+}
+
+interface Employee extends Person {
+	dept: string;
+}
+
+interface Customer extends Person {
+	country: string;
+}
+
+------------------------------------------
+
+interface Animal {
+	getDogs:  ()=>void;
+	getCats?: ()=>void;
+}
+
+class Zoo implements Animal {
+	name = 'Muhhh';
+	getDogs(): void {
+		...
+	}
+}
+
+// Clases **********************************
+// Configurar en el tsconfig.json -> "strictPropertyInitialization": false,
+
+class Employee {
+
+	// Atributos
+	id: number;
+	name: string;
+	dept: string;
+
+	constructor(){}
+	
+	// Métodos
+	showInfo(): void{
+		console.log(`${this.name}´);
+	}
+}
+
+const emp = new Employee();
+	
+----------------------------	
+
+class Employee {
+
+	// Atributos
+	id: number;
+	name: string;
+	dept: string;
+
+	constructor(id:number, name:string, dept:string){
+		this.id = id;
+		this.name = name;
+		this.dept = dept;
+		this.showInfo();
+	}
+	
+	// Métodos
+	showInfo(): void{
+		console.log(`${this.name}´);
+	}
+}
+
+const emp = new Employee(1, 'Ren', 'Sales');
+	
+----------------------------	
+
++ Acceso de control: public/private/protected
+
++ Propiedades automáticas en el constructor:
+
+class Employee {
+
+	constructor(private id:number, private name:string, private dept:string){
+		this.showInfo();
+	}
+	
+	// Métodos
+	showInfo(): void{
+		console.log(`${this.name}´);
+	}
+}
+	
+----------------------------
++ Extends	
+
+
+class Person {
+	protected city: string;
+	constructor(){}
+	greet(): void {
+		console.log('Hello!');
+	}
+}
+
+class Employee extends Person {
+
+	constructor(private readonly id:number, private name:string, private dept:string){
+		super();
+		this.showInfo();
+	}
+	
+	// Métodos
+	showInfo(): void{
+		console.log(`${this.name}´);
+		console.log(`${this.city}´); // Solo las clases que extienden la clase Person tienen acceso a la variable protected 'city'
+	}
+}
+
+// Namespaces (internals) y módulos ***************************************************************
+
+// 1º Crear el fichero Utility.ts
+
+namespace Utility {
+	export namespace Taxes {
+		export function calculateIva(price: number):number {
+			return (price*0.21)+price;
+		}
+		export function calculatePenaltyIva(price: number):number {
+			return (price*0.30)+price;
+		}
+	}
+}
+
+// 2º Para utilizarlo en : index.ts
+
+/// <reference path="utility.ts"/>
+
+let utils = Utility.Taxes;
+
+console.log(utils.calculateIva(100));
+console.log(utils.calculatePenaltyIva(100));
+
+// 3º Daría error porque el contenido está en archivos diferentes.
+// Hay que configurar:
+// Configurar en el tsconfig.json -> "module": "system",
+// Configurar en el tsconfig.json -> "outDir": "./dist/",
+// Configurar en el tsconfig.json -> "outFile": "./dist/output.js",
+// Ahora compilar y ejecutar
+
+// Módulos ******************************************************************************
+// ES6 MODULES
+// Los módulos nos permiten organizar de forma simple nuestro código
+// En typescript cualquier archivo que tenga un 'import' o un 'export' o ambos es un módulo.
+// Los módulos se ejecutan dentro de su propio ámbito y no en el ámbito global.
+// Es decir, las variables, funciones, clases... declaradas dentro de un módulo no serán visibles fuera del módulo
+// a menos que nosotros las exportemos explícitamente
+// Ejemplo export: export myFunction;
+// Ejemplo import: import {muyFunction} from './myModule';
+
+// En myModules.ts escribimos
+export const PI = 3.14;
+
+export interface Person {
+	id: number;
+	name: string;
+}
+
+export function generateRandomNumber():number {
+	return Math.floor(Math.random()*100);
+}
+
+// Configuramos en: tsconfig.json
+// Configurar en el tsconfig.json -> "target": "es2015",
+// Configurar en el tsconfig.json -> "modeResolution": "node",
+// Configurar en el tsconfig.json -> "outDir": "./dist/",
+
+// En index.ts, para poder consumir nuestros módulos escribimos
+import {PI} from './myModules';
+console.log(PI);
+
+// .................................
+
+import {PI, Person} from './myModules';
+
+const user: Person = { // Utilizamos el interfece importado
+	id: 1,
+	name: 'Ren'
+}
+console.log(user);
+
+// ..................................
+
+// Otra posibilidad de exportación es:
+// quitar la palabra export de cada definición y ponerlo todo junto
+
+const PI = 3.14;
+
+interface Person {
+	id: number;
+	name: string;
+}
+
+function generateRandomNumber():number {
+	return Math.floor(Math.random()*100);
+}
+
+export {PI, Person, generateRandomNumber} // Así
+
+// ..................................
+
+// Se puede importar algo utilizando un alias, ejemplo:
+import {PI as myPI} from './myModules';
+
+// ..................................
+
+// Si queremos importar todo lo que existe esta otra opción
+import * as myCode from './myModules';
+
+// Y para utlizarlo:
+console.log(myCode.PI);
+console.log(myCode.generateRandomNumber());
+
+
+// Genérics ******************************************************************************
+// Configuramos en: tsconfig.json
+// Configurar en el tsconfig.json -> "target": "es6",
+// Configurar en el tsconfig.json -> "outDir": "./dist/",
+
+interface Person {
+	id: number;
+	name: string;
+}
+
+class People {
+	private items:Person[] = [];
+	
+	addItem(newItem:Person):void {
+		this.item.push(newItem);
+	}
+
+	getItems(): void {
+		console.log(`Listado de items:`, JSON.stringify(this.items));
+	}
+
+	getItemById(id: number): Person | undefined {
+		return this.items.find((item:Person)=>item.id===id);
+	}
+}
+	
+const personCollection = new People();
+const newData {
+	id: 1,
+	name: 'Ren'
+}
+
+personCollection.addItem(newData);
+personCollection.getItems();
+
+//**************** Aplicamos genéricos
+
+class DataCollection<Tipo extends {id:number, name:string}> {
+	private items:Tipo[] = [];
+	
+	addItem(newItem:Tipo):void {
+		this.item.push(newItem);
+	}
+
+	getItems(): void {
+		console.log(`Listado de items:`, JSON.stringify(this.items));
+	}
+
+	getItemById(id: number): Tipo | undefined {
+		return this.items.find((item:Tipo)=>item.id===id);
+	}
+}
+	
+const dataColleciont = new DataCollection<Persona>();
+const dataColleciont = new DataCollection<Cliente>();
+
+// **************************************************
+// Un ejemplo para un interface
+
+interface Data<T> {
+	addItem(newItem: T): void;
+}
+
+class DataCollection<Tipo extends {id:number, name:string}> implements Data<T> {
+	// Al implementar el interface estamos obligados a implementar el método: 'addItem'
